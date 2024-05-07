@@ -25,7 +25,7 @@ export class ClientService
     return client_response;
   }
 
-  async findOne( id: number ) 
+  async get_by_id( id: number ) 
   {
     return await this.prisma.client.findUnique(
       {
