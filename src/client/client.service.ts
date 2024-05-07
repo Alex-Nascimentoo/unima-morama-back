@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateClientDto } from './dto/create-client.dto';
 import { UpdateClientDto } from './dto/update-client.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
@@ -25,8 +25,9 @@ export class ClientService
     return client_response;
   }
 
-  findOne(id: number) {
-    return this.prisma.client.findUnique(
+  async findOne( id: number ) 
+  {
+    return await this.prisma.client.findUnique(
       {
         where: {
           id: id
@@ -40,11 +41,12 @@ export class ClientService
     );
   }
 
-  update(id: number, update_client_dto: UpdateClientDto) {
-    return `This action updates a #${id} client`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} client`;
+  async remove( id: number ) 
+  {
+    return await this.prisma.client.delete(
+      {
+        where: { id: id }
+      }
+    ).catch( () => { throw new NotFoundException( `Can't find item with id ${id} in database` ) } )
   }
 }
