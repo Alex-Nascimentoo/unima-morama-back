@@ -26,7 +26,18 @@ export class ClientService
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} client`;
+    return this.prisma.client.findUnique(
+      {
+        where: {
+          id: id
+        },
+        select: {
+          id: true,
+          name: true,
+          email: true
+        }
+      }
+    );
   }
 
   update(id: number, update_client_dto: UpdateClientDto) {
