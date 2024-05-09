@@ -1,6 +1,7 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, HttpStatus } from '@nestjs/common';
 import { ClientService } from './client.service';
 import { CreateClientDto } from './dto/create-client.dto';
+import { SkipJWT } from 'src/auth/decorators/skip_auth';
 
 @Controller('/client')
 export class ClientController 
@@ -8,6 +9,7 @@ export class ClientController
   constructor( private readonly client_service: ClientService ) {}
 
 
+  @SkipJWT()
   @Post()
   create( @Body() create_client_dto: CreateClientDto ) 
   {
