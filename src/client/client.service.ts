@@ -41,6 +41,11 @@ export class ClientService
     );
   }
 
+  async get_by_email( email: string ) 
+  {
+    return await this.prisma.client.findUnique( { where: { email: email } } );
+  }
+
   async remove( id: number ) 
   {
     return await this.prisma.client.delete(
