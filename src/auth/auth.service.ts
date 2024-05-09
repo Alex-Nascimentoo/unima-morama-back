@@ -13,8 +13,8 @@ export class AuthService
   async signIn( email: string, request_password: string )
   {
     const client = await this.client_service.get_by_email( email );
-
-    if ( compare( request_password, client.password ) ) 
+    
+    if ( ! await compare( request_password, client.password ) ) 
     {
       throw new UnauthorizedException();
     }
