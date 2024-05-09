@@ -6,16 +6,28 @@ import
     UnauthorizedException,
 } 
 from '@nestjs/common';
+import { Reflector } from '@nestjs/core';
 import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
+import { SKIP_JWT_KEY } from './decorators/skip_auth';
+
   
 @Injectable()
 export class JWTAuth implements CanActivate 
 {
-    constructor( private jwt_service: JwtService ) {}
+    constructor( private jwt_service: JwtService, private metadata: Reflector ) {}
 
     async canActivate( context: ExecutionContext ): Promise<boolean> 
     {
+        const skip_jwt: boolean = this.metadata.getAllAndOverride(
+            SKIP_JWT_KEY,
+            [ context.getHandler(), context.getClass() ]
+        )
+        if ( skip_jwt )
+        {
+            return true;
+        }
+
         const request = context.switchToHttp().getRequest();
         const token = this.extractTokenFromHeader(request);
         if ( !token ) 
