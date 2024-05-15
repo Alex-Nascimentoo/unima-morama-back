@@ -25,6 +25,8 @@ model MenuItem {
   id Int @default( autoincrement() ) @id
   name String
   price Decimal @db.Decimal( 7, 2 )  
+  created_at DateTime @default( now() )
+  updated_at DateTime @updatedAt
   client_id Int
   client Client @relation( fields: [client_id], references: [id] )
 }
