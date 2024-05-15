@@ -14,13 +14,14 @@ datasource db {
 }
 
 model Client {
-  id         Int        @id @default(autoincrement())
-  name       String
-  email      String     @unique
-  password   String
-  menu_items MenuItem[]
-  sales      Sale[]
-  suppliers  Supplier[]
+  id                    Int                  @id @default(autoincrement())
+  name                  String
+  email                 String               @unique
+  password              String
+  menu_items            MenuItem[]
+  sales                 Sale[]
+  suppliers             Supplier[]
+  ingredients_purchased IngredientPurchase[]
 }
 
 model MenuItem {
@@ -52,4 +53,26 @@ model Supplier {
   created_at DateTime @default(now())
   client_id  Int
   client     Client   @relation(fields: [client_id], references: [id])
+}
+
+enum UnitSystem {
+  grams
+  kg
+  ml
+  L
+  unit
+  half_dozen
+  dozen
+}
+
+model IngredientPurchase {
+  id          Int        @id @default(autoincrement())
+  name        String
+  quantity    Int
+  unit_system UnitSystem
+  price       Decimal    @db.Decimal(7, 2)
+  total       Decimal    @db.Decimal(10, 2)
+  created_at  DateTime   @default(now())
+  client_id   Int
+  client      Client     @relation(fields: [client_id], references: [id])
 }
