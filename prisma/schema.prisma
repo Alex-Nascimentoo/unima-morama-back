@@ -19,6 +19,7 @@ model Client {
   email String @unique
   password String
   menu_items MenuItem[]
+  sales Sale[]
 }
 
 model MenuItem {
@@ -29,5 +30,17 @@ model MenuItem {
   updated_at DateTime @updatedAt
   client_id Int
   client Client @relation( fields: [client_id], references: [id] )
+  sales Sale[]
 }
 
+model Sale {
+  id Int @default( autoincrement() ) @id
+  quantity Int
+  price Decimal @db.Decimal( 7, 2 ) 
+  total Decimal @db.Decimal( 10, 2 )  
+  created_at DateTime @default( now() )
+  client_id Int
+  client Client @relation( fields: [client_id], references: [id] )
+  menu_item_id Int
+  menu_item MenuItem @relation( fields: [menu_item_id], references: [id] )
+}
