@@ -20,6 +20,7 @@ model Client {
   password   String
   menu_items MenuItem[]
   sales      Sale[]
+  suppliers  Supplier[]
 }
 
 model MenuItem {
@@ -43,4 +44,12 @@ model Sale {
   client       Client   @relation(fields: [client_id], references: [id])
   menu_item_id Int
   menu_item    MenuItem @relation(fields: [menu_item_id], references: [id])
+}
+
+model Supplier {
+  id         Int      @id @default(autoincrement())
+  name       String
+  created_at DateTime @default(now())
+  client_id  Int
+  client     Client   @relation(fields: [client_id], references: [id])
 }
