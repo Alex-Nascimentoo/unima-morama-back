@@ -54,6 +54,7 @@ model Supplier {
   created_at DateTime @default(now())
   client_id  Int
   client     Client   @relation(fields: [client_id], references: [id])
+  ingredients Ingredient[]
 }
 
 enum UnitSystem {
@@ -73,6 +74,7 @@ model Ingredient {
   purchases  IngredientPurchase[]
   client_id  Int
   client     Client               @relation(fields: [client_id], references: [id])
+  supplier Supplier[]
 }
 
 model IngredientPurchase {
