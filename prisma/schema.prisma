@@ -22,6 +22,7 @@ model Client {
   sales                 Sale[]
   suppliers             Supplier[]
   ingredients_purchased IngredientPurchase[]
+  ingredients           Ingredient[]
 }
 
 model MenuItem {
@@ -65,14 +66,25 @@ enum UnitSystem {
   dozen
 }
 
+model Ingredient {
+  id         Int                  @id @default(autoincrement())
+  name       String               @unique
+  created_at DateTime             @default(now())
+  purchases  IngredientPurchase[]
+  client_id  Int
+  client     Client               @relation(fields: [client_id], references: [id])
+}
+
 model IngredientPurchase {
-  id          Int        @id @default(autoincrement())
-  name        String
-  quantity    Int
-  unit_system UnitSystem
-  price       Decimal    @db.Decimal(7, 2)
-  total       Decimal    @db.Decimal(10, 2)
-  created_at  DateTime   @default(now())
-  client_id   Int
-  client      Client     @relation(fields: [client_id], references: [id])
+  id            Int        @id @default(autoincrement())
+  name          String
+  quantity      Int
+  unit_system   UnitSystem
+  price         Decimal    @db.Decimal(7, 2)
+  total         Decimal    @db.Decimal(10, 2)
+  created_at    DateTime   @default(now())
+  ingredient_id Int
+  ingredient    Ingredient @relation(fields: [ingredient_id], references: [id])
+  client_id     Int
+  client        Client     @relation(fields: [client_id], references: [id])
 }
