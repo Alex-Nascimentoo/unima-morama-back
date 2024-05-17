@@ -12,4 +12,9 @@ export class IngredientService
   {
     return await this.prisma.ingredient.create( { data: create_ingredient_dto } );
   }
+
+  async delete_by_id( id: number )
+  {
+    return await this.prisma.ingredient.delete( { where: { id: id } } );
+  }
 }
