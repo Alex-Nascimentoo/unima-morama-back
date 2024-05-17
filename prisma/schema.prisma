@@ -32,7 +32,7 @@ model MenuItem {
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
   client_id  Int
-  client     Client   @relation(fields: [client_id], references: [id])
+  client     Client   @relation(fields: [client_id], references: [id], onDelete: Cascade)
   sales      Sale[]
 }
 
@@ -43,7 +43,7 @@ model Sale {
   total        Decimal  @db.Decimal(10, 2)
   created_at   DateTime @default(now())
   client_id    Int
-  client       Client   @relation(fields: [client_id], references: [id])
+  client       Client   @relation(fields: [client_id], references: [id], onDelete: Cascade)
   menu_item_id Int
   menu_item    MenuItem @relation(fields: [menu_item_id], references: [id])
 }
@@ -53,7 +53,7 @@ model Supplier {
   name       String
   created_at DateTime @default(now())
   client_id  Int
-  client     Client   @relation(fields: [client_id], references: [id])
+  client     Client   @relation(fields: [client_id], references: [id], onDelete: Cascade)
   ingredients Ingredient[]
   notes Note[]
 }
@@ -63,7 +63,7 @@ model Note {
   text String
   created_at DateTime @default(now())
   supplier_id Int
-  supplier_note Supplier @relation(fields: [supplier_id], references: [id])
+  supplier_note Supplier @relation(fields: [supplier_id], references: [id], onDelete: Cascade)
 }
 
 enum UnitSystem {
@@ -82,7 +82,7 @@ model Ingredient {
   created_at DateTime             @default(now())
   purchases  IngredientPurchase[]
   client_id  Int
-  client     Client               @relation(fields: [client_id], references: [id])
+  client     Client               @relation(fields: [client_id], references: [id], onDelete: Cascade)
   supplier Supplier[]
 }
 
@@ -97,5 +97,5 @@ model IngredientPurchase {
   ingredient_id Int
   ingredient    Ingredient @relation(fields: [ingredient_id], references: [id])
   client_id     Int
-  client        Client     @relation(fields: [client_id], references: [id])
+  client        Client     @relation(fields: [client_id], references: [id], onDelete: Cascade)
 }
