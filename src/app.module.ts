@@ -5,6 +5,7 @@ import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { SupplierController } from './supplier/supplier.controller';
 import { SupplierModule } from './supplier/supplier.module';
+import { IngredientModule } from './ingredient/ingredient.module';
 
 @Module({
   imports: [
@@ -12,7 +13,8 @@ import { SupplierModule } from './supplier/supplier.module';
     ClientModule, 
     PrismaModule, 
     AuthModule,
-    SupplierModule
+    SupplierModule,
+    IngredientModule
   ],
 })
 export class AppModule {}
