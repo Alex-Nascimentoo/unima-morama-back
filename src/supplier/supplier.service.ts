@@ -12,8 +12,13 @@ export class SupplierService
 		return await this.prisma.supplier.create( { data: create_supplier_dto } );
 	}
 
-	async find_all( client_id: any )
+	async find_all( client_id: number )
 	{
-		return await this.prisma.supplier.findMany( { where: { client_id: client_id } } )
+		return await this.prisma.supplier.findMany( { where: { client_id: client_id } } );
+	}
+
+	async delete_by_id( id: number )
+	{
+		return await this.prisma.supplier.delete( { where: { id: id } } );
 	}
 }

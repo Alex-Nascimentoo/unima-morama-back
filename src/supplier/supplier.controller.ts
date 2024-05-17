@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpCode, HttpStatus, Post, Request } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Request } from '@nestjs/common';
 import { CreateSupplierDto } from './dto/create-supplier.dto';
 import { SupplierService } from './supplier.service';
 
@@ -18,6 +18,14 @@ export class SupplierController
 	@Get()
 	get_client_suppliers( @Request() req: any )
 	{
-		return this.supplier_service.find_all( req.sub )
+		return this.supplier_service.find_all( req.sub );
+	}
+
+	// TODO: permission to delete only if supplier pertences to client
+	@HttpCode( HttpStatus.NO_CONTENT )
+	@Delete( '/:id' )
+	delete( @Param( 'id' ) id: number )
+	{
+		return this.supplier_service.delete_by_id( id );
 	}
 }
