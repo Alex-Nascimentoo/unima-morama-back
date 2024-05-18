@@ -22,4 +22,9 @@ export class IngredientService
   {
     return await this.prisma.ingredient.findMany( { where: { client_id: client_id } } );
   }
+
+  async find_by_id( id: number )
+  {
+    return await this.prisma.ingredient.findUnique( { where: { id: id } } );
+  }
 }
