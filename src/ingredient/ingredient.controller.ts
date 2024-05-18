@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, HttpCode, HttpStatus, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Request } from '@nestjs/common';
 import { IngredientService } from './ingredient.service';
 import { CreateIngredientDto } from './dto/create-ingredient.dto';
 
@@ -20,5 +20,11 @@ export class IngredientController
   delete( @Param( 'id' ) id: number )
   {
     return this.ingredient_service.delete_by_id( id );
+  }
+
+  @Get()
+  get_client_ingredients( @Request() req: any )
+  {
+    return this.ingredient_service.find_all( req.sub );
   }
 }

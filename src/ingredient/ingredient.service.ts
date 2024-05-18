@@ -17,4 +17,9 @@ export class IngredientService
   {
     return await this.prisma.ingredient.delete( { where: { id: id } } );
   }
+
+  async find_all( client_id: number )
+  {
+    return await this.prisma.ingredient.findMany( { where: { client_id: client_id } } );
+  }
 }
