@@ -12,17 +12,19 @@ export class ClientService
 
   async create( create_client_dto: CreateClientDto ) 
   {
-    const client = await this.prisma.client.create(
+    return await this.prisma.client.create(
       {
         data: {
           ...create_client_dto,
           password: await hash( create_client_dto.password, 10 )
+        },
+        select: {
+          id: true,
+          name: true,
+          email: true,
         }
       }
     );
-
-    const { password, ...client_response } = client;
-    return client_response;
   }
 
   async get_by_id( id: number ) 
