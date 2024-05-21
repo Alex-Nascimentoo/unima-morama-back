@@ -2,7 +2,6 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateIngredientOrderDto } from './dto/create-ingredient-order.dto';
 import { IngredientService } from 'src/ingredient/ingredient.service';
-import { connect } from 'http2';
 
 @Injectable()
 export class IngredientOrderService 
