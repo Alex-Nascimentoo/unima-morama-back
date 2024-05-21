@@ -17,6 +17,11 @@ export class SupplierService
 		return await this.prisma.supplier.findMany( { where: { client_id: client_id } } );
 	}
 
+	async find_by_id( id: number )
+	{
+		return await this.prisma.supplier.findUnique( { where: { id: id } } );
+	}
+
 	async delete_by_id( id: number )
 	{
 		return await this.prisma.supplier.delete( { where: { id: id } } );
