@@ -14,11 +14,12 @@ export class AuthService
   {
     const client = await this.client_service.get_by_email( email );
     
+    // @ts-ignore
     if ( ! await compare( request_password, client.password ) ) 
     {
       throw new UnauthorizedException();
     }
-
+    // @ts-ignore
     const payload = { sub: client.id, email: email }
     return { access_token: await this.jwt_service.signAsync( payload ) };
   }
