@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, HttpStatus, Request } from '@nestjs/common';
 import { ClientService } from './client.service';
 import { CreateClientDto } from './dto/create-client.dto';
 import { SkipJWT } from 'src/auth/decorators/skip_auth';
+import { GetUser } from 'src/auth/decorators/get_user';
 
 @Controller('/client')
 export class ClientController 
@@ -22,10 +23,10 @@ export class ClientController
     return this.client_service.get_by_id( id );
   }
 
-  @Delete( ':id' )
+  @Delete()
   @HttpCode( HttpStatus.NO_CONTENT )
-  remove( @Param('id') id: number ) 
+  remove( @GetUser() id: number ) 
   {
-    this.client_service.remove( id );
+    this.client_service.delete( id );
   }
 }
