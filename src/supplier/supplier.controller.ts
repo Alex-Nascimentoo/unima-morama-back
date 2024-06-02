@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Request } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post } from '@nestjs/common';
 import { CreateSupplierDto } from './dto/create-supplier.dto';
 import { SupplierService } from './supplier.service';
 import { GetUser } from 'src/auth/decorators/get_user';
@@ -17,9 +17,9 @@ export class SupplierController
 	}
 
 	@Get()
-	get_client_suppliers( @Request() req: any )
+	get_client_suppliers( @GetUser() user_id: number )
 	{
-		return this.supplier_service.find_all( req.sub );
+		return this.supplier_service.find_all( user_id );
 	}
 
 	@Get( '/:id' )
