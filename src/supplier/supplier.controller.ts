@@ -28,7 +28,6 @@ export class SupplierController
 		return this.supplier_service.find_by_id( user_id, id );
 	}
 
-	// TODO: permission to delete only if supplier pertences to client
 	@HttpCode( HttpStatus.NO_CONTENT )
 	@Delete( '/:id' )
 	delete( @GetUser() user_id: number, @Param( 'id' ) id: number )
