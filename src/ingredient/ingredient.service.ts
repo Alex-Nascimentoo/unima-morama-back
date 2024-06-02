@@ -11,7 +11,11 @@ export class IngredientService
 
   async create( user_id: number, create_ingredient_dto: CreateIngredientDto )
   {
-    return await this.prisma.ingredient.create( { data: { ...create_ingredient_dto, client_id: user_id } } );
+    const ingredient = this.find_by_name( user_id, create_ingredient_dto.name );
+
+    return ingredient 
+      ? ingredient 
+      : await this.prisma.ingredient.create( { data: { ...create_ingredient_dto, client_id: user_id } } );
   }
 
   async delete_by_id( user_id: number, id: number )
@@ -31,5 +35,10 @@ export class IngredientService
     const ingredient = await this.prisma.ingredient.findUnique( { where: { id: id, client_id: user_id } } );
 
     return ingredient? ingredient : new NotFoundException( "Ingredient doesn't exist." )
+  }
+
+  private async find_by_name( user_id: number, name: string )
+  {
+    return await this.prisma.ingredient.findUnique( { where: { name: name, client_id: user_id } } );
   }
 }
