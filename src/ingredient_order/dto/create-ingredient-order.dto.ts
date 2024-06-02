@@ -14,7 +14,4 @@ export class CreateIngredientOrderDto
 
   @IsInt()
   ingredient: number
-
-  @IsInt()
-  client: number
 }

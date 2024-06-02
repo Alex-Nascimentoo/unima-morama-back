@@ -12,20 +12,16 @@ export class IngredientOrderService
   ){}
 
 
-  async create( create_ingredient_order_dto: CreateIngredientOrderDto )
+  async create( user_id: number, create_ingredient_order_dto: CreateIngredientOrderDto )
   {
-    const ingredient = await this.ingredient_service.find_by_id( create_ingredient_order_dto.ingredient );
-    if ( !ingredient )
-    {
-      throw new NotFoundException(`Ingredient with ID ${ create_ingredient_order_dto.ingredient } not found`);
-    }
+    const ingredient = await this.ingredient_service.find_by_id( user_id, create_ingredient_order_dto.ingredient );
 
     return await this.prisma.ingredientPurchase.create({ 
       data: {
         name: ingredient.name,
         ...create_ingredient_order_dto,
         total: create_ingredient_order_dto.price * create_ingredient_order_dto.quantity,
-        client: { connect: { id: create_ingredient_order_dto.client } },
+        client: { connect: { id: user_id } },
         ingredient: { connect: { id: create_ingredient_order_dto.ingredient } },
       }
     });
