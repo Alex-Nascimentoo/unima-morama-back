@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateSupplierDto } from './dto/create-supplier.dto';
 
@@ -19,11 +19,15 @@ export class SupplierService
 
 	async find_by_id( user_id: number, id: number )
 	{
-		return await this.prisma.supplier.findUnique( { where: { id: id, client_id: user_id } } );
+		const ingredient = await this.prisma.supplier.findUnique( { where: { id: id, client_id: user_id } } );
+
+		return ingredient ? ingredient : new NotFoundException( "Supplier doesn't exist." );
 	}
 
 	async delete_by_id( user_id: number, id: number )
 	{
+		this.find_by_id( user_id, id );
+
 		return await this.prisma.supplier.delete( { where: { id: id, client_id: user_id } } );
 	}
 }
