@@ -31,8 +31,8 @@ export class SupplierController
 	// TODO: permission to delete only if supplier pertences to client
 	@HttpCode( HttpStatus.NO_CONTENT )
 	@Delete( '/:id' )
-	delete( @Param( 'id' ) id: number )
+	delete( @GetUser() user_id: number, @Param( 'id' ) id: number )
 	{
-		return this.supplier_service.delete_by_id( id );
+		return this.supplier_service.delete_by_id( user_id, id );
 	}
 }
