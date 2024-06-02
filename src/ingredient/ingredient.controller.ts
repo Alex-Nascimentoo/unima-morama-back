@@ -1,6 +1,7 @@
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Request } from '@nestjs/common';
 import { IngredientService } from './ingredient.service';
 import { CreateIngredientDto } from './dto/create-ingredient.dto';
+import { GetUser } from 'src/auth/decorators/get_user';
 
 @Controller( '/ingredient' )
 export class IngredientController 
@@ -23,8 +24,8 @@ export class IngredientController
   }
 
   @Get()
-  get_client_ingredients( @Request() req: any )
+  get_client_ingredients( @GetUser() user_id: number )
   {
-    return this.ingredient_service.find_all( req.sub );
+    return this.ingredient_service.find_all( user_id );
   }
 }
