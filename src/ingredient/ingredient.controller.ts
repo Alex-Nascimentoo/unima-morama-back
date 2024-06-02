@@ -18,9 +18,9 @@ export class IngredientController
 
   @HttpCode( HttpStatus.NO_CONTENT )
   @Delete( '/:id' )
-  delete( @Param( 'id' ) id: number )
+  delete( @GetUser() user_id: number, @Param( 'id' ) id: number )
   {
-    return this.ingredient_service.delete_by_id( id );
+    return this.ingredient_service.delete_by_id( user_id, id );
   }
 
   @Get()

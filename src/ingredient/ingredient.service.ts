@@ -13,18 +13,18 @@ export class IngredientService
     return await this.prisma.ingredient.create( { data: create_ingredient_dto } );
   }
 
-  async delete_by_id( id: number )
+  async delete_by_id( user_id: number, id: number )
   {
-    return await this.prisma.ingredient.delete( { where: { id: id } } );
+    return await this.prisma.ingredient.delete( { where: { id: id, client_id: user_id } } );
   }
 
-  async find_all( client_id: number )
+  async find_all( user_id: number )
   {
-    return await this.prisma.ingredient.findMany( { where: { client_id: client_id } } );
+    return await this.prisma.ingredient.findMany( { where: { client_id: user_id } } );
   }
 
-  async find_by_id( id: number )
+  async find_by_id( user_id: number, id: number )
   {
-    return await this.prisma.ingredient.findUnique( { where: { id: id } } );
+    return await this.prisma.ingredient.findUnique( { where: { id: id, client_id: user_id } } );
   }
 }
