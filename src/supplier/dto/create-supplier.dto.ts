@@ -4,7 +4,4 @@ export class CreateSupplierDto
 {
     @IsString()
     name: string
-
-    @IsInt()
-    client_id: number
 }
