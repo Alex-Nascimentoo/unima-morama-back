@@ -29,8 +29,8 @@ export class IngredientController
     return this.ingredient_service.find_all( user_id );
   }
 
-  @Get( ':id' )
-  get_ingredient( @GetUser() user_id: number, id: number )
+  @Get( '/:id' )
+  get_ingredient( @GetUser() user_id: number, @Param( 'id' ) id: number )
   {
     return this.ingredient_service.find_by_id( user_id, id );
   }
