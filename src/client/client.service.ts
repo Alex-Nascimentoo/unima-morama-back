@@ -42,20 +42,29 @@ export class ClientService
       }
     );
 
-    return client ? client : new NotFoundException( "Client doesn't exist." )
+    if ( !client )
+    {
+      throw new NotFoundException( "Client doesn't exist." );
+    }
+
+    return client;
   }
 
   async get_by_email( email: string ) 
   {
     const client = await this.prisma.client.findUnique( { where: { email: email } } );
 
-    return client ? client : new NotFoundException( "Client doesn't exist." );
+    if ( !client )
+    {
+      throw new NotFoundException( "Client doesn't exist." );
+    }
+
+    return client;
   }
 
   async delete_by_id( id: number ) 
   {
-    this.get_by_id( id );
-
+    await this.get_by_id( id );
     return await this.prisma.client.delete( { where: { id: id } } );
   }
 }

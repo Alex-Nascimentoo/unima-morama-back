@@ -19,15 +19,19 @@ export class SupplierService
 
 	async find_by_id( user_id: number, id: number )
 	{
-		const ingredient = await this.prisma.supplier.findUnique( { where: { id: id, client_id: user_id } } );
+		const supplier = await this.prisma.supplier.findUnique( { where: { id: id, client_id: user_id } } );
+		
+		if ( !supplier )
+    {
+      throw new NotFoundException( "Supplier doesn't exist." );
+    }
 
-		return ingredient ? ingredient : new NotFoundException( "Supplier doesn't exist." );
+    return supplier;
 	}
 
 	async delete_by_id( user_id: number, id: number )
 	{
-		this.find_by_id( user_id, id );
-
+		await this.find_by_id( user_id, id );
 		return await this.prisma.supplier.delete( { where: { id: id, client_id: user_id } } );
 	}
 }
