@@ -25,8 +25,8 @@ export class ClientController
 
   @Delete()
   @HttpCode( HttpStatus.NO_CONTENT )
-  remove( @GetUser() id: number ) 
+  deleteAccount( @GetUser() id: number ) 
   {
-    this.client_service.delete( id );
+    this.client_service.delete_by_id( id );
   }
 }

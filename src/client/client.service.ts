@@ -52,7 +52,7 @@ export class ClientService
     return client ? client : new NotFoundException( "Client doesn't exist." );
   }
 
-  async delete( id: number ) 
+  async delete_by_id( id: number ) 
   {
     this.get_by_id( id );
 
