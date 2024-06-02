@@ -7,9 +7,9 @@ export class SupplierService
 {
 	constructor( private readonly prisma: PrismaService ){}
 
-	async create( create_supplier_dto: CreateSupplierDto )
+	async create( user_id: number, create_supplier_dto: CreateSupplierDto )
 	{
-		return await this.prisma.supplier.create( { data: create_supplier_dto } );
+		return await this.prisma.supplier.create( { data: { ...create_supplier_dto, client_id: user_id } } );
 	}
 
 	async find_all( client_id: number )

@@ -1,6 +1,7 @@
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Request } from '@nestjs/common';
 import { CreateSupplierDto } from './dto/create-supplier.dto';
 import { SupplierService } from './supplier.service';
+import { GetUser } from 'src/auth/decorators/get_user';
 
 @Controller('/supplier')
 export class SupplierController 
@@ -10,9 +11,9 @@ export class SupplierController
 
 	@HttpCode( HttpStatus.CREATED )
 	@Post()
-	create( @Body() create_supplier_dto: CreateSupplierDto )
+	create( @GetUser() user_id: number, @Body() create_supplier_dto: CreateSupplierDto )
 	{
-		return this.supplier_service.create( create_supplier_dto );
+		return this.supplier_service.create( user_id, create_supplier_dto );
 	}
 
 	@Get()
