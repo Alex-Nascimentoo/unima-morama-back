@@ -17,8 +17,8 @@ export class ClientController
     return this.client_service.create( create_client_dto );
   }
 
-  @Get( ':id' )
-  findOne( @Param('id') id: number ) 
+  @Get()
+  findOne( @GetUser() id: number ) 
   {
     return this.client_service.get_by_id( id );
   }
