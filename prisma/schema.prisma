@@ -49,20 +49,20 @@ model Sale {
 }
 
 model Supplier {
-  id         Int      @id @default(autoincrement())
-  name       String
-  created_at DateTime @default(now())
-  client_id  Int
-  client     Client   @relation(fields: [client_id], references: [id], onDelete: Cascade)
+  id          Int          @id @default(autoincrement())
+  name        String       @unique
+  created_at  DateTime     @default(now())
+  client_id   Int
+  client      Client       @relation(fields: [client_id], references: [id], onDelete: Cascade)
   ingredients Ingredient[]
-  notes Note[]
+  notes       Note[]
 }
 
 model Note {
-  id         Int      @id @default(autoincrement())
-  text String
-  created_at DateTime @default(now())
-  supplier_id Int
+  id            Int      @id @default(autoincrement())
+  text          String
+  created_at    DateTime @default(now())
+  supplier_id   Int
   supplier_note Supplier @relation(fields: [supplier_id], references: [id], onDelete: Cascade)
 }
 
@@ -83,7 +83,7 @@ model Ingredient {
   purchases  IngredientPurchase[]
   client_id  Int
   client     Client               @relation(fields: [client_id], references: [id], onDelete: Cascade)
-  supplier Supplier[]
+  supplier   Supplier[]
 }
 
 model IngredientPurchase {
