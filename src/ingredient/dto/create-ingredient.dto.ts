@@ -4,7 +4,4 @@ export class CreateIngredientDto
 {
   @IsString()
   name: string
-
-  @IsInt()
-  client_id: number
 }

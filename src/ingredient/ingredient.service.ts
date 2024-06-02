@@ -8,9 +8,9 @@ export class IngredientService
   constructor( private readonly prisma: PrismaService ){}
 
 
-  async create( create_ingredient_dto: CreateIngredientDto )
+  async create( user_id: number, create_ingredient_dto: CreateIngredientDto )
   {
-    return await this.prisma.ingredient.create( { data: create_ingredient_dto } );
+    return await this.prisma.ingredient.create( { data: { ...create_ingredient_dto, client_id: user_id } } );
   }
 
   async delete_by_id( user_id: number, id: number )

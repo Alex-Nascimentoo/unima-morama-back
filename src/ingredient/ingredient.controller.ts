@@ -11,9 +11,9 @@ export class IngredientController
 
   @HttpCode( HttpStatus.CREATED )
   @Post()
-  create( @Body() create_ingredient_dto: CreateIngredientDto )
+  create( @GetUser() user_id: number, @Body() create_ingredient_dto: CreateIngredientDto )
   {
-    return this.ingredient_service.create( create_ingredient_dto );
+    return this.ingredient_service.create( user_id, create_ingredient_dto );
   }
 
   @HttpCode( HttpStatus.NO_CONTENT )
