@@ -23,9 +23,9 @@ export class SupplierController
 	}
 
 	@Get( '/:id' )
-	get_supplier( @Param( 'id' ) id: number )
+	get_supplier( @GetUser() user_id: number, @Param( 'id' ) id: number )
 	{
-		return this.supplier_service.find_by_id( id );
+		return this.supplier_service.find_by_id( user_id, id );
 	}
 
 	// TODO: permission to delete only if supplier pertences to client

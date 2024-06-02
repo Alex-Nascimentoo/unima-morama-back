@@ -17,9 +17,9 @@ export class SupplierService
 		return await this.prisma.supplier.findMany( { where: { client_id: user_id } } );
 	}
 
-	async find_by_id( id: number )
+	async find_by_id( user_id: number, id: number )
 	{
-		return await this.prisma.supplier.findUnique( { where: { id: id } } );
+		return await this.prisma.supplier.findUnique( { where: { id: id, client_id: user_id } } );
 	}
 
 	async delete_by_id( id: number )
