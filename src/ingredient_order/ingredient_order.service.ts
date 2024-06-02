@@ -26,4 +26,18 @@ export class IngredientOrderService
       }
     });
   }
+
+  async delete_by_id( user_id: number, id: number )
+  {
+    this.find_by_id( user_id, id );
+
+    return await this.prisma.ingredientPurchase.delete( { where: { id: id, client_id: user_id } } );
+  }
+
+  private async find_by_id( user_id: number, id: number )
+  {
+    const ingredient_order = await this.prisma.ingredientPurchase.findUnique( { where: { id: id, client_id: user_id } } )
+  
+    return ingredient_order ? ingredient_order : new NotFoundException( "Ingredient order doesn't exist." );
+  }
 }
