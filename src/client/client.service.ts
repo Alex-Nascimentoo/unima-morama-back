@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateClientDto } from './dto/create-client.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { hash } from 'bcrypt';
@@ -11,6 +11,8 @@ export class ClientService
 
   async create( create_client_dto: CreateClientDto ) 
   {
+    await this.check_email_in_use( create_client_dto.email );
+
     return await this.prisma.client.create(
       {
         data: {
@@ -66,5 +68,15 @@ export class ClientService
   {
     await this.get_by_id( id );
     return await this.prisma.client.delete( { where: { id: id } } );
+  }
+
+  private async check_email_in_use( email: string )
+  {
+    const client = await this.prisma.client.findUnique( { where: { email: email } } );
+
+    if ( client )
+    {
+      throw new ConflictException( "Email already in use" );
+    }
   }
 }
