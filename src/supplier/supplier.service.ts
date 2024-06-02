@@ -9,7 +9,10 @@ export class SupplierService
 
 	async create( user_id: number, create_supplier_dto: CreateSupplierDto )
 	{
-		return await this.prisma.supplier.create( { data: { ...create_supplier_dto, client_id: user_id } } );
+		const supplier = await this.find_by_name( user_id, create_supplier_dto.name );
+		return supplier 
+			? supplier 
+			: await this.prisma.supplier.create( { data: { ...create_supplier_dto, client_id: user_id } } );
 	}
 
 	async find_all( user_id: number )
@@ -33,5 +36,10 @@ export class SupplierService
 	{
 		await this.find_by_id( user_id, id );
 		return await this.prisma.supplier.delete( { where: { id: id, client_id: user_id } } );
+	}
+
+	private async find_by_name( user_id: number, name: string )
+	{
+		return await this.prisma.supplier.findUnique( { where: { name: name, client_id: user_id } } );
 	}
 }
