@@ -28,7 +28,8 @@ export class ClientService
 
   async get_by_id( id: number ) 
   {
-    return await this.prisma.client.findUnique(
+
+    const client = await this.prisma.client.findUnique(
       {
         where: {
           id: id
@@ -40,6 +41,8 @@ export class ClientService
         }
       }
     );
+
+    return client ? client : new NotFoundException( "Client doesn't exist." )
   }
 
   async get_by_email( email: string ) 
@@ -51,13 +54,7 @@ export class ClientService
 
   async delete( id: number ) 
   {
-
-    const client = await this.prisma.client.findUnique( { where: { id: id } } );
-
-    if ( !client )
-    {
-      throw new NotFoundException( "Client doesn't exist." );
-    }
+    this.get_by_id( id );
 
     return await this.prisma.client.delete( { where: { id: id } } );
   }
