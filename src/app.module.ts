@@ -7,6 +7,7 @@ import { SupplierController } from './supplier/supplier.controller';
 import { SupplierModule } from './supplier/supplier.module';
 import { IngredientModule } from './ingredient/ingredient.module';
 import { IngredientOrderModule } from './ingredient_order/ingredient_order.module';
+import { UtilsModule } from './utils/utils.module';
 
 @Module({
   imports: [
@@ -16,7 +17,8 @@ import { IngredientOrderModule } from './ingredient_order/ingredient_order.modul
     AuthModule,
     SupplierModule,
     IngredientModule,
-    IngredientOrderModule
+    IngredientOrderModule,
+    UtilsModule
   ],
 })
 export class AppModule {}
