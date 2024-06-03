@@ -23,7 +23,6 @@ export class IngredientOrderController
     return this.ingredient_order_service.delete_by_id( user_id, id );
   }
 
-  @HttpCode( HttpStatus.OK )
   @Get()
   get_client_ingredient_orders( @GetUser() user_id: number )
   {
