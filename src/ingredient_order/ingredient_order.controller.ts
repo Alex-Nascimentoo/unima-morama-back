@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Query } from '@nestjs/common';
 import { IngredientOrderService } from './ingredient_order.service';
 import { CreateIngredientOrderDto } from './dto/create-ingredient-order.dto';
 import { GetUser } from 'src/auth/decorators/get_user';
@@ -27,5 +27,11 @@ export class IngredientOrderController
   get_client_ingredient_orders( @GetUser() user_id: number )
   {
     return this.ingredient_order_service.find_all( user_id );
+  }
+
+  @Get( '/date' )
+  get_ingredient_orders_by_date( @GetUser() user_id: number, @Query( 'date' ) date: string | object )
+  {
+    return this.ingredient_order_service.find_by_date( user_id, date );
   }
 }

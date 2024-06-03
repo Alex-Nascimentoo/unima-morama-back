@@ -2,13 +2,15 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateIngredientOrderDto } from './dto/create-ingredient-order.dto';
 import { IngredientService } from 'src/ingredient/ingredient.service';
+import { UtilsService } from 'src/utils/utils.service';
 
 @Injectable()
 export class IngredientOrderService 
 {
   constructor( 
     private readonly prisma: PrismaService, 
-    private readonly ingredient_service: IngredientService 
+    private readonly ingredient_service: IngredientService,
+    private readonly utils: UtilsService
   ){}
 
 
@@ -50,5 +52,20 @@ export class IngredientOrderService
   async find_all( user_id: number )
   {
     return await this.prisma.ingredientPurchase.findMany( { where: { client_id: user_id } } );
+  }
+
+  async find_by_date( user_id: number, date: string | object )
+  {
+    const [ inital_date, end_date ] = this.utils.destruct_parameter( date );
+
+    return await this.prisma.ingredientPurchase.findMany({ 
+      where: { 
+        client_id: user_id, 
+        created_at: { 
+          gte: `${ inital_date }T00:00:00Z`,
+          lte: `${ end_date }T23:59:59Z`
+        }
+      }
+    });
   }
 }
