@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, HttpCode, HttpStatus, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post } from '@nestjs/common';
 import { IngredientOrderService } from './ingredient_order.service';
 import { CreateIngredientOrderDto } from './dto/create-ingredient-order.dto';
 import { GetUser } from 'src/auth/decorators/get_user';
@@ -21,5 +21,12 @@ export class IngredientOrderController
   delete( @GetUser() user_id: number, @Param( 'id' ) id: number )
   {
     return this.ingredient_order_service.delete_by_id( user_id, id );
+  }
+
+  @HttpCode( HttpStatus.OK )
+  @Get()
+  get_client_ingredient_orders( @GetUser() user_id: number )
+  {
+    return this.ingredient_order_service.find_all( user_id );
   }
 }

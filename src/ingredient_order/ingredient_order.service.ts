@@ -46,4 +46,9 @@ export class IngredientOrderService
   
     return ingredient_order;
   }
+
+  async find_all( user_id: number )
+  {
+    return await this.prisma.ingredientPurchase.findMany( { where: { client_id: user_id } } );
+  }
 }
