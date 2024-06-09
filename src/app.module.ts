@@ -8,6 +8,7 @@ import { SupplierModule } from './supplier/supplier.module';
 import { IngredientModule } from './ingredient/ingredient.module';
 import { IngredientOrderModule } from './ingredient_order/ingredient_order.module';
 import { UtilsModule } from './utils/utils.module';
+import { MenuItemModule } from './menu_item/menu_item.module';
 
 @Module({
   imports: [
@@ -18,7 +19,8 @@ import { UtilsModule } from './utils/utils.module';
     SupplierModule,
     IngredientModule,
     IngredientOrderModule,
-    UtilsModule
+    UtilsModule,
+    MenuItemModule
   ],
 })
 export class AppModule {}
