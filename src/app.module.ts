@@ -9,6 +9,8 @@ import { IngredientModule } from './ingredient/ingredient.module';
 import { IngredientOrderModule } from './ingredient_order/ingredient_order.module';
 import { UtilsModule } from './utils/utils.module';
 import { MenuItemModule } from './menu_item/menu_item.module';
+import { SaleService } from './sale/sale.service';
+import { SaleModule } from './sale/sale.module';
 
 @Module({
   imports: [
@@ -20,7 +22,9 @@ import { MenuItemModule } from './menu_item/menu_item.module';
     IngredientModule,
     IngredientOrderModule,
     UtilsModule,
-    MenuItemModule
+    MenuItemModule,
+    SaleModule
   ],
+  providers: [SaleService],
 })
 export class AppModule {}
